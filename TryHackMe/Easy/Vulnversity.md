@@ -16,10 +16,6 @@ nmap -sV -sC --open $IP -oN scan.txt
 
 **Resultado**
 ```bash
-# Nmap 7.95 scan initiated Sat Sep 27 16:40:06 2025 as: /usr/lib/nmap/nmap --privileged -sV -sC --open -oN scan.txt $IP
-Nmap scan report for $IP
-Host is up (0.32s latency).
-Not shown: 994 closed tcp ports (reset)
 PORT     STATE SERVICE     VERSION
 21/tcp   open  ftp         vsftpd 3.0.5
 22/tcp   open  ssh         OpenSSH 8.2p1 Ubuntu 4ubuntu0.13 (Ubuntu Linux; protocol 2.0)
@@ -46,9 +42,6 @@ Host script results:
 | smb2-time: 
 |   date: 2025-09-27T20:40:34
 |_  start_date: N/A
-
-Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
-# Nmap done at Sat Sep 27 16:40:48 2025 -- 1 IP address (1 host up) scanned in 42.04 seconds
 ```
 **Resumen**
 
@@ -70,20 +63,6 @@ gobuster dir -u http://$IP:3333 -w /usr/share/wordlists/dirbuster/directory-list
 
 **Resultado**
 ```bash
-===============================================================
-Gobuster v3.8
-by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
-===============================================================
-[+] Url:                     http://$IP:3333
-[+] Method:                  GET
-[+] Threads:                 10
-[+] Wordlist:                /usr/share/wordlists/dirbuster/directory-list-1.0.txt
-[+] Negative Status codes:   404
-[+] User Agent:              gobuster/3.8
-[+] Timeout:                 10s
-===============================================================
-Starting gobuster in directory enumeration mode
-===============================================================
 /images               (Status: 301) [Size: 322] [--> http://$IP:3333/images/]                                                                   
 /css                  (Status: 301) [Size: 319] [--> http://$IP:3333/css/]                                                                      
 /js                   (Status: 301) [Size: 318] [--> http://$IP:3333/js/]                                                                       
