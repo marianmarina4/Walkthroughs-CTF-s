@@ -24,7 +24,6 @@ Guardar y organizar mis walkthroughs personales para estudiar, repasar técnicas
 
 * Solo agregar máquinas **retired** o entornos donde tengo permiso.
 * No subir flags, contraseñas ni claves privadas en texto o imágenes.
-* Writeups de máquinas activas deben mantenerse **privados** o **encriptados**.
 
 ---
 
@@ -33,17 +32,14 @@ Guardar y organizar mis walkthroughs personales para estudiar, repasar técnicas
 ```
 walkthroughs/
   hackthebox/
-    <machine-name>-<YYYY>-<difficulty>/
-      README.md        # walkthrough específico
-      screenshots/
-      exploits/
-      notes.md
-  hackmyvm/
+    difficulty/
+      machine.md
+  tryhackme/
+    difficulty/
+      machine.md
 README.md
 .gitignore
 LICENSE.md
-generate_index.sh (opcional)
-.github/workflows/ (opcional)
 ```
 
 ---
