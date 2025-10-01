@@ -47,34 +47,23 @@ LICENSE.md
 ## Plantilla rápida para cada walkthrough
 
 ```markdown
-# <Machine-Name> — <Plataforma> — <Dificultad>
+# <Machine-Name> — Writeup
 
-**Fecha:** YYYY-MM-DD  
+**Fecha:** DD-MM-YYYY 
 **Plataforma:** Hack The Box / HackMyVM / CTF / Lab  
 **Estado:** Retired / Private / Active  
-**Autor:** Mariano Marina
 
 ## Resumen (TL;DR)
 - Objetivos: user + root
-- Cadena rápida (1–3 líneas)
 
-## Enumeración
+## Enumeration
 - Comandos y resultados importantes
 
-## Acceso inicial (foothold)
+## Foothold
 - Pasos y outputs relevantes
 
-## Escalada a root
+## Privilege Escalation
 - Herramientas y razonamiento
-
-## PoC / scripts
-- Scripts documentados
-
-## Conclusión / Aprendizajes
-- Qué aprendí
-
-## Referencias
-- Links a documentación y CVEs
 ```
 
 ---
