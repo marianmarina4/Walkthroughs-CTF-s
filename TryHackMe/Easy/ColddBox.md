@@ -93,7 +93,8 @@ philip
 
 **Result**
 ```bash
-
+[!] Valid Combinations Found:
+ | Username: c0ldd, Password: REDACTED
 ```
 ## Foothold
 **Reverse Shell**
