@@ -3,6 +3,8 @@
 **Fecha:** 28-09-2025\
 **Plataforma:** TryHackMe
 
+---
+
 ## TL;DR
 
 Se encontraron servicios FTP, SSH, Samba y un servicio web con un directorio de subida (/internal). Subiendo un webshell .phtml se consiguió una reverse shell como www-data. Desde esa cuenta se escaló privilegios aprovechando /bin/systemctl con permiso SUID para ejecutar una unidad systemd que leyó /root/root.txt a /tmp/flag.
