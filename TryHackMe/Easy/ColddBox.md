@@ -1,4 +1,5 @@
-ColddBox 
+# ColddBox — Writeup
+
 **Fecha:** 1-09-2025 
 **Plataforma:** TryHackMe
 
