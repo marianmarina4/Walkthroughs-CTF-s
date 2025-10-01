@@ -51,7 +51,6 @@ LICENSE.md
 
 **Fecha:** DD-MM-YYYY 
 **Plataforma:** Hack The Box / HackMyVM / CTF / Lab  
-**Estado:** Retired / Private / Active  
 
 ## Resumen (TL;DR)
 - Objetivos: user + root
