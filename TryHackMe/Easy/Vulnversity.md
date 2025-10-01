@@ -17,7 +17,7 @@ nmap -sV -sC --open $IP -oN scan.txt
 
 **Comment:** `-sV` detecta versiones de servicios; `-sC` ejecuta scripts por defecto; `--open` muestra solo los puertos abiertos; `-oN` guarda la salida en un archivo normal.
 
-**Resultado**
+**Result**
 ```bash
 PORT     STATE SERVICE     VERSION
 21/tcp   open  ftp         vsftpd 3.0.5
@@ -129,9 +129,9 @@ Aplicamos una wordlist de extensiones (phpext.txt) como payload para identificar
 
 ---
 
-## Reverse Shell
+## Foothold
 
-**Script Reverse Shell**
+**Reverse Shell**
 <details><summary><i>php-reverse-shell.phtml</i></summary>
 
 ```bash	
