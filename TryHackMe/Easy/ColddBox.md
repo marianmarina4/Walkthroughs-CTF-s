@@ -1,3 +1,6 @@
+ColddBox 
+**Fecha:** 1-09-2025 
+**Plataforma:** TryHackMe
 
 ## Enumeration (nmap)
 
@@ -16,11 +19,11 @@ PORT   STATE SERVICE VERSION
 |_http-server-header: Apache/2.4.18 (Ubuntu)
 ```
 
-**Resumen**
+**Summary**
 * 80/tcp open http (Apache/2.4.18)
 
 ---
-## Web Enumeration
+## Web Enumeration (Gobuster)
 
 ```bash
   gobuster dir -u http://$IP -w /usr/share/wordlists/dirbuster/directory-list-1.0.txt
@@ -54,7 +57,7 @@ PORT   STATE SERVICE VERSION
 
 ---
 
-## Brute Force
+**Brute Force**
 ```bash
   wpscan --url http://$IP --usernames wp-users.txt --passwords /usr/share/wordlists/rockyou.txt
 ```
@@ -72,8 +75,11 @@ philip
 ```bash
 
 ```
-## Reverse shell
+## Foothold
+**Reverse Shell**
+
 **Upload Script**
 
 **Listen Port**
-**Upgrade Shell
+
+**Upgrade Shell**
