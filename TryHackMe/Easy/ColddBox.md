@@ -29,12 +29,23 @@ PORT   STATE SERVICE VERSION
 ```bash
   gobuster dir -u http://$IP -w /usr/share/wordlists/dirbuster/directory-list-1.0.txt
 ```
+**Comment:** `dir` busca directorios y archivos ocultos; `-w` lista de palabras.
+
+**Result**
+```bash
+===============================================================
+/wp-content           (Status: 301) [Size: 317] [--> http://10.201.96.48/wp-content/]                                                                     
+/wp-admin             (Status: 301) [Size: 315] [--> http://10.201.96.48/wp-admin/]                                                                       
+Progress: 141707 / 141707 (100.00%)
+===============================================================
+```
 
 ## Users Enumeration
 
 ```bash
   wpscan --url http://$IP --enumerate u 
 ```
+**Comment:** `--enumerate u` enumera usuarios de wordpress.
 
 **Result**
 ```bash
