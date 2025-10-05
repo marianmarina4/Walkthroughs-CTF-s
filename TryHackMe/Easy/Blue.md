@@ -1,6 +1,6 @@
-# ColddBox — Writeup
+# Blue — Writeup
 
-**Fecha:** 1-09-2025\
+**Fecha:** 5-10-2025\
 **Plataforma:** TryHackMe
 
 ---
