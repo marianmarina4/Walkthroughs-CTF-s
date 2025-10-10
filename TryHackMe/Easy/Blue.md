@@ -7,7 +7,7 @@
 
 ## TL;DR
 
-Se identificaron puertos RPC/SMB en una máquina con Windows 7 (especialmente el servicio SMB en el puerto 445). Se explotó la vulnerabilidad MS17-010 (module ms17_010_eternalblue en Metasploit) para obtener una shell remota, se elevó/convertió la sesión a meterpreter y se migró a services.exe para mayor estabilidad; desde ahí se volcó el SAM con hashdump, se crackeó la contraseña del usuario Jon usando john con la wordlist rockyou.txt, y con ese acceso se recopilaron las flags leyendo /flag1.txt, /Windows/system32/config/flag2.txt y /Users/Jon/Documents/flag3.txt.
+Se detectó un servicio SMB en un Windows 7 en el puerto 445, se explotó la vulnerabilidad MS17-010 (EternalBlue) con Metasploit para obtener shell, se elevó a meterpreter y se migró a services.exe, se volcó el SAM con hashdump, se crackeó la contraseña de Jon con john (rockyou) y con ese acceso se leyeron las tres flags.
 
 ---
 
