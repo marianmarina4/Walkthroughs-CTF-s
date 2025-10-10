@@ -32,14 +32,12 @@ Guardar y organizar mis walkthroughs personales para estudiar, repasar técnicas
 ```
 walkthroughs/
   hackthebox/
-    difficulty/
-      machine.md
+    machine.md
   tryhackme/
-    difficulty/
-      machine.md
-README.md
-.gitignore
-LICENSE.md
+    machine.md
+  README.md
+  .gitignore
+  LICENSE.md
 ```
 
 ---
