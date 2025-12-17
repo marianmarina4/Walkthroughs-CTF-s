@@ -12,7 +12,7 @@ Repositorio personal de writeups, walkthroughs y notas técnicas sobre plataform
 * [Estructura del repo](#estructura-del-repositorio)
 * [Plantilla rápida para cada walkthrough](#plantilla-rápida-para-cada-walkthrough)
 * [Contacto](#contacto)
-* [Etiquetas](#etiquetas)
+* [Etiquetas](#etiquetas-(tags))
 
 ---
 
