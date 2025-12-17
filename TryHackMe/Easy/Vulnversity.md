@@ -342,7 +342,7 @@ WantedBy=multi-user.target' > $TF
 
 ## Tools Used
 * Nmap
-* ffuf
+* GoBuster
 * Burp Suite
 * Netcat
 * SUID files
