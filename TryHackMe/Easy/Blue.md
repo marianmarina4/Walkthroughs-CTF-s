@@ -166,3 +166,5 @@ meterpreter > cat flag3.txt
 * Metasploit
 * Meterpreter
 * Windows enumeration commands
+* hashdump
+* John the Ripper
