@@ -158,3 +158,11 @@ meterpreter > cat flag2.txt
 meterpreter > cd /Users/Jon/Documents
 meterpreter > cat flag3.txt
 ```
+
+---
+
+## Tools Used
+* Nmap
+* Metasploit
+* Meterpreter
+* Windows enumeration commands
