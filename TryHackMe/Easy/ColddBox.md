@@ -313,3 +313,13 @@ root
 ```bash
 # cat /root/root.txt
 ```
+
+---
+
+## Tools Used
+* Nmap
+* GoBuster
+* WPScan
+* WordPRess Admin Panel
+* SUID files
+  
