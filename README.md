@@ -1,43 +1,84 @@
 # Walkthroughs — Mariano Marina
 
-Repositorio personal donde guardo mis writeups y walkthroughs de plataformas de pentesting (Hack The Box, HackMyVM, CTFs, laboratorios privados, etc.) para estudio y referencia personal.
+Repositorio personal de writeups, walkthroughs y notas técnicas sobre plataformas de pentesting y laboratorios de ciberseguridad.
 
 ---
 
 ## Tabla de contenidos
 
-* [Propósito del repo](#propósito-del-repo)
+* [Propósito del repositorio](#propósito-del-repositorio)
 * [Aviso legal / Ética](#aviso-legal--ética)
-* [Estructura del repo](#estructura-del-repo)
+* [Metodología utilizada](#metodología-utilizada)
+* [Estructura del repo](#estructura-del-repositorio)
 * [Plantilla rápida para cada walkthrough](#plantilla-rápida-para-cada-walkthrough)
 * [Contacto](#contacto)
+* [Etiquetas](#etiquetas)
 
 ---
 
-## Propósito del repo
+## Propósito del repositorio
+Este repositorio reúne mis walkthroughs y análisis técnicos realizados en:
+- TryHackMe
+- HackMyVM
+- CTFs independientes
+- Laboratorios privados
+- Ejercicios de práctica personal
+Mi objetivo es documentar mi proceso de aprendizaje en seguridad ofensiva, mejorar mi metodología de pentesting y mantener un registro organizado de técnicas, herramientas y vulnerabilidades.
 
-Guardar y organizar mis walkthroughs personales para estudiar, repasar técnicas y mantener material de referencia seguro.
 
 ---
 
 ## Aviso legal / Ética
 
-* Solo agregar máquinas **retired** o entornos donde tengo permiso.
-* No subir flags, contraseñas ni claves privadas en texto o imágenes.
+- Solo publico walkthroughs de máquinas retiradas, permitidas o creadas para práctica.
+- No incluyo flags, contraseñas reales ni claves privadas.
+- No publico writeups de máquinas activas de plataformas como HTB o THM.
+- Todo el contenido es únicamente para fines educativos y éticos
+s.
 
 ---
 
-## Estructura del repo
+## Metodología utilizada
+Mis walkthroughs siguen una metodología ofensiva alineada con estándares como PTES y enfoques OSCP-like:
+1. Reconocimiento
+- Escaneos con Nmap
+- Identificación de servicios, versiones y vectores iniciales
+2. Enumeración
+- Fuzzing con ffuf
+- Análisis web con Burp Suite
+- Enumeración SMB, FTP, SSH, etc.
+- Recolección de credenciales y rutas vulnerables
+3. Explotación
+- Uso de exploits manuales o PoCs
+- Metasploit cuando corresponde
+- Inyección, RCE, LFI/RFI, fuerza bruta, etc.
+4. Escalada de privilegios
+- Análisis de permisos
+- SUID, sudoers
+- Servicios vulnerables
+- Credenciales internas
+5. Documentación
+- Cada writeup incluye pasos claros, comandos utilizados y conclusiones técnicas.
+
+---
+
+## Estructura del repositorio
 
 ```
-walkthroughs/
-  hackthebox/
-    machine.md
-  tryhackme/
-    machine.md
-  README.md
-  .gitignore
-  LICENSE.md
+Walkthroughs-CTF-s/
+│
+├── TryHackMe/
+│   ├── Easy/
+│   │   ├── Vulnversity-THM.md
+│   │   ├── Blue-THM.md
+│   │   ├── BasicPentesting-THM.md
+│   │   └── ColddBox-THM.md
+│   └── (más niveles próximamente)
+│
+├── HackMyVM/
+│   └── (walkthroughs futuros)
+│
+└── Plantillas y notas
 ```
 
 ---
@@ -45,22 +86,13 @@ walkthroughs/
 ## Plantilla rápida para cada walkthrough
 
 ```markdown
-# <Machine-Name> — Writeup
-
-**Fecha:** DD-MM-YYYY 
-**Plataforma:** Hack The Box / HackMyVM / CTF / Lab  
-
-## Resumen (TL;DR)
-- Objetivos: user + root
-
-## Enumeration
-- Comandos y resultados importantes
-
-## Foothold
-- Pasos y outputs relevantes
-
-## Privilege Escalation
-- Herramientas y razonamiento
+# Nombre de la máquina
+## 1. Reconocimiento
+## 2. Enumeración
+## 3. Explotación
+## 4. Escalada de privilegios
+## 5. Lecciones aprendidas
+## 6. Herramientas utilizadas
 ```
 
 ---
@@ -68,3 +100,10 @@ walkthroughs/
 ## Contacto
 
 **Mariano Marina** — repositorio para uso personal, destinado únicamente a agregar mis walkthroughs y scripts de estudio.
+
+---
+
+## Etiquetas (tags)
+#pentesting #tryhackme #ctf #writeups #cybersecurity  
+#ethicalhacking #oscp #redteam #enumeration #privesc  
+#infosec #walkthroughs #hackmyvm #offensivesecurity
