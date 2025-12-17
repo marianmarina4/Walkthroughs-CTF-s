@@ -345,4 +345,4 @@ WantedBy=multi-user.target' > $TF
 * ffuf
 * Burp Suite
 * Netcat
-* LinPEAS
+* SUID files
