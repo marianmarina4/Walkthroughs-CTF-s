@@ -12,7 +12,7 @@ Repositorio personal de writeups, walkthroughs y notas técnicas sobre plataform
 * [Estructura del repo](#estructura-del-repositorio)
 * [Plantilla rápida para cada walkthrough](#plantilla-rápida-para-cada-walkthrough)
 * [Contacto](#contacto)
-* [Etiquetas](#etiquetas-(tags))
+* [Etiquetas](#etiquetas)
 
 ---
 
@@ -103,7 +103,7 @@ Walkthroughs-CTF-s/
 
 ---
 
-## Etiquetas (tags)
+## Etiquetas
 #pentesting #tryhackme #ctf #writeups #cybersecurity  
 #ethicalhacking #oscp #redteam #enumeration #privesc  
 #infosec #walkthroughs #hackmyvm #offensivesecurity
