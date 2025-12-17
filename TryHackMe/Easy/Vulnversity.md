@@ -337,3 +337,12 @@ WantedBy=multi-user.target' > $TF
 ```bash
 	$ cat /tmp/flag
 ```
+
+---
+
+## Tools Used
+* Nmap
+* ffuf
+* Burp Suite
+* Netcat
+* LinPEAS
