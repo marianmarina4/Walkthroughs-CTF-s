@@ -9,7 +9,7 @@ Repositorio personal de writeups, walkthroughs y notas técnicas sobre plataform
 * [Propósito del repositorio](#propósito-del-repositorio)
 * [Aviso legal / Ética](#aviso-legal--ética)
 * [Metodología utilizada](#metodología-utilizada)
-* [Estructura del repo](#estructura-del-repositorio)
+* [Estructura del repositorio](#estructura-del-repositorio)
 * [Plantilla rápida para cada walkthrough](#plantilla-rápida-para-cada-walkthrough)
 * [Contacto](#contacto)
 * [Etiquetas](#etiquetas)
